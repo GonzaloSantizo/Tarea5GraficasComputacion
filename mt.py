@@ -12,7 +12,7 @@ def multiplicar_matrices(matriz1, matriz2):
     # Crear una matriz de resultado con las dimensiones adecuadas
     matriz_resultado = [[0 for y in range(columnas_matriz2)] for x in range(filas_matriz1)]
 
-    # Realizar la multiplicaciï¿½n de matrices
+    # Realizar la multiplicación de matrices
     for i in range(filas_matriz1):
         for j in range(columnas_matriz2):
             for k in range(columnas_matriz1):
@@ -33,7 +33,7 @@ def multiplicar_matriz_vector(matriz,vector):
     # Crear un vector de resultado con las dimensiones adecuadas
     vector_resultado = [0 for x in range(filas_matriz)]
 
-    # Realizar la multiplicaciï¿½n matriz-vector
+    # Realizar la multiplicación matriz-vector
     for i in range(filas_matriz):
         for k in range(columnas_matriz):
             vector_resultado[i] += matriz[i][k] * vector[k]

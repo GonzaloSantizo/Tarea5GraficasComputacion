@@ -7,8 +7,8 @@ from lights import *
 from materials import *
 
 
-width = 256
-height = 256
+width = 512
+height = 512
 
 pygame.init()
 
@@ -40,7 +40,7 @@ raytracer.scene.append(Sphere(position=(2,0,-5),radius=0.8,material=grass))
 
 raytracer.lights.append(AmbientLight(intensity=0.1))
 raytracer.lights.append(DirectionalLight(direction=(-1,-1,-1),intensity=0.9))
-#raytracer.lights.append(PointLight(point=(1.5,0,-5),intensity=1,color=(1,0,1)))
+#raytracer.lights.append(PointLight(point=(1.5,0,-5),intensity=1,color=(1,0,1)))s
 
 raytracer.rtClear()
 raytracer.rtRender()
