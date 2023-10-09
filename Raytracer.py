@@ -23,24 +23,28 @@ marsTexture = pygame.image.load("textures/mars.bmp")
 
 brick = Material(diffuse=(1,0.4,0.4),spec=8,Ks=0.01)
 grass = Material(diffuse=(0.4,1,0.4),spec=32,Ks=0.1)
-water = Material(diffuse=(0.4,0.4,1),spec=256,Ks=0.2, matType=OPAQUE)
-mars = Material(texture = marsTexture,spec=64,Ks=0.1,matType=OPAQUE)
+water = Material(diffuse=(0.4,0.4,1),spec=256,Ks=0.2)
 mirror = Material(diffuse=(0.9,0.9,0.9),spec=64,Ks=0.2,matType=REFLECTIVE)
 blueMirror = Material(diffuse=(0.4,0.4,0.9),spec=32,Ks=0.15,matType=REFLECTIVE)
-redMirror = Material(diffuse=(0.9,0.9,0.9),spec=64,Ks=0.2,matType=TRANSPARENT)
-greenMirror = Material(diffuse=(0.9,0.9,0.9),spec=64,Ks=0.2,matType=TRANSPARENT)
+earth = Material(texture = marsTexture,spec=64,Ks=0.1,matType=REFLECTIVE)
+
+ 
+#paredes
+raytracer.scene.append(Plane(position=(0,-5,-5),normal=(0,1,0),material=water))
+raytracer.scene.append(Plane(position=(0,5,-5),normal=(0,-1,0),material=grass))
+raytracer.scene.append(Plane(position=(0,0,-10),normal=(0,0,1),material=brick))
+raytracer.scene.append(Plane(position=(-5,0,-5),normal=(1,0,0),material=water))
 
 
-raytracer.scene.append(Sphere(position=(-2,2,-5),radius=0.8,material=mirror))
-raytracer.scene.append(Sphere(position=(2,2,-5),radius=0.8,material=mars))
-raytracer.scene.append(Sphere(position=(0,2,-5),radius=0.8,material=blueMirror))
-raytracer.scene.append(Sphere(position=(0,0,-5),radius=0.8,material=water))
-raytracer.scene.append(Sphere(position=(-2,0,-5),radius=0.8,material=brick))
-raytracer.scene.append(Sphere(position=(2,0,-5),radius=0.8,material=grass))
+#objetos
+raytracer.scene.append(Disk(position=(0,-1.5,-5),normal=(0,1,0),radius=1.5,material=water))
+raytracer.scene.append(AABB(position=(1.5,1.5,-5),size=(1,1,1),material=water))
+raytracer.scene.append(AABB(position=(-1.5,1.5,-5),size=(1,1,1),material=water))
+
 
 raytracer.lights.append(AmbientLight(intensity=0.1))
 raytracer.lights.append(DirectionalLight(direction=(-1,-1,-1),intensity=0.9))
-#raytracer.lights.append(PointLight(point=(1.5,0,-5),intensity=1,color=(1,0,1)))s
+#raytracer.lights.append(PointLight(point=(1.5,0,-5),intensity=1,color=(1,0,1)))
 
 raytracer.rtClear()
 raytracer.rtRender()

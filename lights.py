@@ -25,7 +25,7 @@ def totalInternalReflection(incident,normal,n1,n2):
         n1,n2=n2,n1
         
     Ai = acos(np.dot(incident,normal))
-    Ac = asen(n2/n1)
+    Ac = asin(n2/n1)
     
     return Ai>=Ac
 

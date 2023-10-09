@@ -1,5 +1,6 @@
 from math import tan,pi,atan2,acos
 import mt
+import numpy as np
 
 import pygame
 import random
@@ -154,6 +155,27 @@ class RayTracer(object):
                     if shadowIntersect == None:
                         specularColor = [(specularColor[i]+light.getSpecularColor(intercept,self.camPosition)[i]) for i in range(3)]
         
+        elif material.matType == TRANSPARENT:
+            outside = np.dot(rayDirection,intercept.normal)<0
+            bias = intercept.normal*0.001
+
+            reflect = reflectVector(intercept.normal,mt.deny_array(rayDirection))
+            reflectOrig = np.add(intercept.point,bias) if outside else np.subtract(intercept.point,bias)
+            reflectIntercept = self.rtCastRay(reflectOrig,reflect,None,recursion+1)
+            reflectColor = self.rtRayColor(reflectIntercept,reflect,recursion+1)
+            
+            n1 = 1.0 if outside else material.ior
+            n2 = material.ior if outside else 1.0
+            
+            if not totalInternalReflection(rayDirection,intercept.normal,n1,n2):
+                refract = refractVector(rayDirection,intercept.point,n1,n2)
+                refractOrig = np.subtract(intercept.point,bias) if outside else np.add(intercept.point,bias)
+                refractIntercept = self.rtCastRay(refractOrig,refract,None,recursion+1)
+                refractColor = self.rtRayColor(refractIntercept,refract,recursion+1)
+            
+            Kr,Kt = fresnel(n1,n2)
+            reflectColor *= Kr
+            refractColor *= Kt
             
         
         lightColor = [(ambientColor[i]+diffuseColor[i]+specularColor[i]+reflectColor[i]+refractColor[i]) for i in range(3)]
